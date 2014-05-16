@@ -130,8 +130,8 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public boolean isGameOver() {
-        return isBoardFull() && !isMovePossible();
-    }
+		return isBoardFull() && !isMovePossible();
+	}
 	
 	/**
 	 * Method that returns true if the board is full.
@@ -147,8 +147,8 @@ public class Game2048State implements AdversarySearchState{
 		return true;
 	}
 	
-    private boolean isMovePossible() {
-    	return false;// implement
-    }
+	private boolean isMovePossible() {
+		return false;// implement
+	}
 
 }
