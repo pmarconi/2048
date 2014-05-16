@@ -53,4 +53,12 @@ public interface AdversarySearchState {
 	 */
 	abstract Object ruleApplied();
 	
+	/**
+	 * Returns the integer in the board at the position i and j.
+	 * @param i position.
+	 * @param j position.
+	 * @return the integer in the board at the position i and j.
+	 */
+	abstract int get(int i, int j);
+	
 }
