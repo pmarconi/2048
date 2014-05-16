@@ -129,6 +129,34 @@ public class Game2048State implements AdversarySearchState{
 		return vector;
 	}
 	
+	public static void moveLeft(){
+		if(isMovePossibleRL()){
+			board = boardMove(0);
+			max=true;
+		}			
+	}
+	
+	public static void moveRight(){
+		if(isMovePossibleRL()){
+			board = boardMove(1);
+			max=true;
+		}			
+	}
+	
+	public static void moveDown(){
+		if(isMovePossibleUD()){
+			board = boardMove(2);
+			max=true;
+		}			
+	}
+	
+	public static void moveUp(){
+		if(isMovePossibleUD()){
+			board = boardMove(3);
+			max=true;
+		}			
+	}
+	
 	public boolean isGameOver() {
 		return isBoardFull() && !isMovePossible();
 	}
@@ -147,8 +175,31 @@ public class Game2048State implements AdversarySearchState{
 		return true;
 	}
 	
-	private boolean isMovePossible() {
-		return false;// implement
+	private static boolean isMovePossible() {
+		return isMovePossibleRL() || isMovePossibleUD();
 	}
 
+	private static boolean isMovePossibleRL() {
+		for(int i=0;i<size;i++){
+			for(int j=0;j<size-1;j++){
+				int aux=j+1;
+				if(board[i][j]==board[i][aux])
+					return true;				
+			}
+		}
+		return false;
+	}
+
+	private static boolean isMovePossibleUD() {		
+		for(int j=0;j<size;j++){
+			for(int i=0;i<size-1;i++){
+				int aux=i+1;
+				if(board[i][j]==board[aux][j])
+					return true;				
+			}
+		}
+		return false;
+	}
+	
+	
 }

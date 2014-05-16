@@ -81,5 +81,43 @@ public class BoardTests {
 		};
 		assertArrayEquals(b.boardMove(2),expBoard);
 	}
-
+	
+	@Test
+	public void testIsGameOver() {
+		Game2048State b = new Game2048State();
+		int[][] b1 = {
+				{16,2,4,2},
+				{2,4,16,4},
+				{16,8,16,2},
+				{8,4,2,4},
+		};
+		b.setBoard(b1);		
+		assertFalse(b.isGameOver());
+	}
+	
+	@Test
+	public void testIsGameOver2() {
+		Game2048State b = new Game2048State();
+		int[][] b1 = {
+				{16,2,4,2},
+				{2,4,16,4},
+				{16,8,4,2},
+				{8,4,2,4},
+		};
+		b.setBoard(b1);		
+		assertTrue(b.isGameOver());
+	}
+	
+	@Test
+	public void testIsGameOver3() {
+		Game2048State b = new Game2048State();
+		int[][] b1 = {
+				{16,2,4,2},
+				{2,4,16,4},
+				{16,8,0,2},
+				{8,4,2,4},
+		};
+		b.setBoard(b1);		
+		assertFalse(b.isGameOver());
+	}
 }
