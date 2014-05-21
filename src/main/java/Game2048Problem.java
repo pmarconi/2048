@@ -4,6 +4,7 @@
 package main.java;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author matias
@@ -11,16 +12,28 @@ import java.util.List;
  */
 public class Game2048Problem implements AdversarySearchProblem {
 	Game2048State state; 
+	Random random;
 	/**
 	 * 
 	 */
 	public Game2048Problem() {
-		// TODO Auto-generated constructor stub
+		random = null;
 	}
 
 	@Override
 	public AdversarySearchState initialState() {
-		return null;
+		int x = random.nextInt(4); 		// for test use 0
+		int y = random.nextInt(4);   //for test use 0
+		int value = (random.nextInt(10) < 9) ?  2 : 4; //for test use 1
+		int [][] boardAux = {
+				{0,0,0,0},
+				{0,0,0,0},
+				{0,0,0,0},
+				{0,0,0,0},
+							};
+		boardAux[x][y] = value;
+		state.setBoard(boardAux);
+		return state; 
 	}
 
 	@Override

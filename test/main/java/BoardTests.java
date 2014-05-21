@@ -221,4 +221,19 @@ public class BoardTests {
 		assertArrayEquals(b.addNewValue(),expBoard);
 	}
 	
+	@Test
+	// inicializa el tablero en (0,0) con 1 
+	public void initialState() {
+		Game2048Problem p = new Game2048Problem();
+		Game2048State s = new Game2048State();				
+		p.initialState();
+		int[][] expBoard = {
+				{1,0,0,0},  
+				{0,0,0,0},
+				{0,0,0,0},
+				{0,0,0,0},
+		};		
+		assertArrayEquals(s.getBoard(),expBoard);
+	}
+	
 }
