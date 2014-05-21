@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.Random;
+
 public class Game2048State implements AdversarySearchState{
 	
 	private static final int size = 4;// Size of the board.
@@ -7,6 +9,8 @@ public class Game2048State implements AdversarySearchState{
 	private static int[][] board;
 	
 	private static boolean max;
+	
+	private Random random;
 	
 	public Game2048State(){
 		board = new int[size][size];
@@ -200,6 +204,42 @@ public class Game2048State implements AdversarySearchState{
 		}
 		return false;
 	}
+	/**
+	 * Metodo que agrega de forma inteligente un valor en el tablero
+	 * 
+	 */
+	public static int[][] addNewValue(){
+		int [][] boardAux = board;
+		int value = 2;//(random.nextInt(10) < 9) ?  2 : 4;; //valor a setear en el tablero
+		boolean cellSet = false;  //flag para identificar que la celda sea seteada una sola vez 
+		while(!cellSet){
+			if(!isBoardFull() && !cellSet){  // Agregara un nuevo valor si el tablero no esta lleno y no fue seteada aun la celda
+				for(int i=0;i<boardAux.length;i++){  
+					for(int j=2; j<boardAux.length;j++){     // Busca en la columna 1 y 2 del tablero
+						if(( (boardAux[i][0] == boardAux[i][j]) || (boardAux[i][1]==boardAux[i][j]) ) && boardAux[i][j-1] == 0){  
+							boardAux[i][j-1] = value;
+							cellSet = true;
+							break;												
+						}
+					}
+				}
+				for(int i=2;i<boardAux.length;i++){
+					for(int j=0; j<boardAux.length;j++){ // Busca en la fila 1 y 2 del tablero
+						if(( (boardAux[0][j] == boardAux[i][j]) || (boardAux[1][j] == boardAux[i][j]))  && boardAux[i-1][j]==0){
+							boardAux[i-1][j] = value;
+							cellSet = true;
+							break;
+						}
+					}
+				}
+			}					
+		} // fin del while
+		return boardAux;	
+	} //fin del metodo addNewCell()
+	
+	
 	
 	
 }
+	
+
