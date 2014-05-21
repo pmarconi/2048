@@ -10,7 +10,6 @@ public class Game2048State implements AdversarySearchState{
 	
 	private static boolean max;
 	
-	private Random random;
 	
 	public Game2048State(){
 		board = new int[size][size];
@@ -232,13 +231,20 @@ public class Game2048State implements AdversarySearchState{
 						}
 					}
 				}
-			}					
+				// si no puede colocar un nuevo valor de forma inteligente, hace un Random de los indices en cualquier lugar desocupado
+				Random random = null;
+				while(!cellSet){
+					int x = random.nextInt(boardAux.length);
+					int y = random.nextInt(boardAux.length);
+					if (boardAux[x][y]==0) {
+		                boardAux[x][y] = value;
+		                cellSet = true;
+					}
+				}
+			}
 		} // fin del while
 		return boardAux;	
 	} //fin del metodo addNewCell()
-	
-	
-	
 	
 }
 	
