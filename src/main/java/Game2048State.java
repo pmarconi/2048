@@ -249,50 +249,25 @@ public class Game2048State implements AdversarySearchState{
 		return false;
 	}
 	/**
-	 * This method agree new value in the board, search a pair of values ​​are equal and 
-	 * that among them there is a 0, then insert the new value
+	 * This method agree new value in Random position 
 	 * 
 	 * @pre board != null 	  
 	 * @return board - agree new value in the board, 
 	 */
-	public static int[][] addNewValue(){
+	public int[][] addNewValue(){
+		boolean cellSet = false;
 		int [][] boardAux = board;
-		random = null;
-		int value = (random.nextInt(10) < 9) ?  2 : 4; //set value Random  - for test use 2  
-		boolean cellSet = false;  // cellSet (flag) identifies if any cell not set 
+		int value = (random.nextInt(10) < 9) ?  2 : 4;
 		while(!cellSet){
-			if(!isBoardFull() && !cellSet){  // agree new value in cell if board is not full and any cell set yet.
-				for(int i=0;i<boardAux.length;i++){  
-					for(int j=2; j<boardAux.length;j++){     // Search in the column 1 and 2 in the board
-						if(( (boardAux[i][0] == boardAux[i][j]) || (boardAux[i][1]==boardAux[i][j]) ) && boardAux[i][j-1] == 0){  
-							boardAux[i][j-1] = value;
-							cellSet = true;
-							break;												
-						}
-					}
-				}
-				for(int i=2;i<boardAux.length;i++){
-					for(int j=0; j<boardAux.length;j++){ // Search in the row 1 and 2 in the board
-						if(( (boardAux[0][j] == boardAux[i][j]) || (boardAux[1][j] == boardAux[i][j]))  && boardAux[i-1][j]==0){
-							boardAux[i-1][j] = value;
-							cellSet = true;
-							break;
-						}
-					}
-				}
-				// if not set cell form intelligent, do Random in the index where boardAux[random][random] == 0
-				while(!cellSet){
-					int x = random.nextInt(boardAux.length);
-					int y = random.nextInt(boardAux.length);
-					if (boardAux[x][y]==0) {
-		                boardAux[x][y] = value;
-		                cellSet = true;
-					}
-				}
-			}
-		} // end while
+			int x = random.nextInt(boardAux.length);
+			int y = random.nextInt(boardAux.length);
+			if (boardAux[x][y]==0) {
+				boardAux[x][y] = value;
+		        cellSet = true;
+			}			
+		} 
 		return boardAux;	
-	} //end Method addNewCell()
+	} 
 
 	public void put(int i, int j, int value) {
 		board[i][j] = value;		
