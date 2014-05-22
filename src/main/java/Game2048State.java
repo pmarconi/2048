@@ -9,6 +9,8 @@ public class Game2048State implements AdversarySearchState{
 	private static int[][] board;
 	
 	private static boolean max;
+
+	private static Random random;
 	
 	
 	public Game2048State(){
@@ -220,7 +222,7 @@ public class Game2048State implements AdversarySearchState{
 	 */
 	public static int[][] addNewValue(){
 		int [][] boardAux = board;
-		Random random = null;
+		random = null;
 		int value = (random.nextInt(10) < 9) ?  2 : 4; //set value Random  - for test use 2  
 		boolean cellSet = false;  // cellSet (flag) identifies if any cell not set 
 		while(!cellSet){
@@ -256,6 +258,10 @@ public class Game2048State implements AdversarySearchState{
 		} // end while
 		return boardAux;	
 	} //end Method addNewCell()
+
+	public void put(int i, int j, int value) {
+		board[i][j] = value;		
+	}
 	
 }
 	
