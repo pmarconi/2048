@@ -171,9 +171,18 @@ public class Game2048State implements AdversarySearchState{
 	 * @return true if the game over.
 	 */
 	public boolean isGameOver() {
-		return isBoardFull() && !isMovePossible();
+		return isBoardFull() && !isMovePossible() && !found2048();
 	}
 	
+	private boolean found2048() {
+		for(int i=0;i<size;i++){
+			for(int j=0;j<size;i++){
+				if(board[i][j]==2048) return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Method that returns true if the board is full.
 	 * @return true if board is full.
