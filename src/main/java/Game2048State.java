@@ -6,22 +6,42 @@ public class Game2048State implements AdversarySearchState{
 	
 	private static final int size = 4;// Size of the board.
 	
-	private static int[][] board;
+	private int[][] board;
 	
-	private static boolean max;
+	private boolean max;
 
-	private static Random random;
+	private Random random;
 	
 	
 	public Game2048State(){
 		board = new int[size][size];
+		init();
+	}
+	
+	public Game2048State(Game2048State other) {
+		if (other==null) throw new IllegalArgumentException();
+		board = new int[size][size];
+		
+		for(int i=0; i<size; i++) {
+			for (int j=0; j<size; j++) {
+				board[i][j] = other.getBoard()[i][j];
+			}
+		}
+		max = other.isMax();
+	}
+	
+	public void init(){
+		//Change.
+		board[1][1] = 2;
+		board[2][2] = 2;
+		board[3][3] = 4;
 	}
 	
 	/**
 	 * Set a new board (array of integer).
 	 * @param b, new board.
 	 */
-	public static void setBoard(int[][] b){
+	public void setBoard(int[][] b){
 		board = b;
 	}
 	
@@ -29,7 +49,7 @@ public class Game2048State implements AdversarySearchState{
 	 * Get the array board.
 	 * @return the array board.
 	 */
-	public static int[][] getBoard(){
+	public int[][] getBoard(){
 		return board;
 	}
 	
@@ -75,7 +95,7 @@ public class Game2048State implements AdversarySearchState{
 	 * @param direction, value 0 to left, 1 right, 2 down and 3 up.
 	 * @return a board after a movement.
 	 */
-	public static int[][] boardMove(int direction){
+	public int[][] boardMove(int direction){
 		if(direction < 0 || direction > 3) throw new IllegalStateException("The direction value is not valid!");
 		int[] vector = vectorOfMovements(direction);		
 		int[][] resBoard = new int[size][size];
@@ -127,7 +147,7 @@ public class Game2048State implements AdversarySearchState{
 	 * @param direction of the movement, 0 left, 1 right, 2 down and 3 up.
 	 * @return the vector that defines the begin, end and increments of variables 'i' and 'j'.
 	 */
-	public static int[] vectorOfMovements(int direction){
+	public int[] vectorOfMovements(int direction){
 		int[] vector;
 		//Vector [0:begin of 'i', 1:begin of 'j',2:end of 'i', 3:end of 'j',4:increment of 'i', 5:increment of 'j']
 		if(direction == 0 || direction == 3){ // Left and up.
@@ -138,28 +158,28 @@ public class Game2048State implements AdversarySearchState{
 		return vector;
 	}
 	
-	public static void moveLeft(){
+	public void moveLeft(){
 		if(isMovePossibleLeft()){
 			board = boardMove(0);
 			max=true;
 		}			
 	}
 	
-	public static void moveRight(){
+	public void moveRight(){
 		if(isMovePossibleRight()){
 			board = boardMove(1);
 			max=true;
 		}			
 	}
 	
-	public static void moveDown(){
+	public void moveDown(){
 		if(isMovePossibleDown()){
 			board = boardMove(2);
 			max=true;
 		}			
 	}
 	
-	public static void moveUp(){
+	public void moveUp(){
 		if(isMovePossibleUp()){
 			board = boardMove(3);
 			max=true;
@@ -187,7 +207,7 @@ public class Game2048State implements AdversarySearchState{
 	 * Method that returns true if the board is full.
 	 * @return true if board is full.
 	 */
-	private static boolean isBoardFull(){
+	private boolean isBoardFull(){
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
 				if(board[i][j] == 0)
@@ -197,11 +217,11 @@ public class Game2048State implements AdversarySearchState{
 		return true;
 	}
 	
-	private static boolean isMovePossible() {
+	private boolean isMovePossible() {
 		return isMovePossibleLeft() || isMovePossibleRight() || isMovePossibleUp() || isMovePossibleDown();
 	}
 	
-	public static boolean isMovePossibleLeft() {
+	public boolean isMovePossibleLeft() {
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size-1; j++){
 				int aux = j+1;
@@ -213,7 +233,7 @@ public class Game2048State implements AdversarySearchState{
 		return false;
 	}
 	
-	public static boolean isMovePossibleRight() {
+	public boolean isMovePossibleRight() {
 		for(int i = 0; i < size; i++){
 			for(int j = size-1; j > 0; j--){
 				int aux = j-1;
@@ -225,7 +245,7 @@ public class Game2048State implements AdversarySearchState{
 		return false;
 	}
 	
-	public static boolean isMovePossibleUp() {
+	public boolean isMovePossibleUp() {
 		for(int j = 0; j < size; j++){
 			for(int i = 0; i < size-1; i++){
 				int aux = i+1;
@@ -237,7 +257,7 @@ public class Game2048State implements AdversarySearchState{
 		return false;
 	}
 	
-	public static boolean isMovePossibleDown() {
+	public boolean isMovePossibleDown() {
 		for(int j = 0; j < size; j++){
 			for(int i = size-1; i > 0; i--){
 				int aux = i-1;
@@ -248,9 +268,9 @@ public class Game2048State implements AdversarySearchState{
 		}
 		return false;
 	}
+	
 	/**
 	 * This method agree new value in Random position 
-	 * 
 	 * @pre board != null 	  
 	 * @return board - agree new value in the board, 
 	 */
