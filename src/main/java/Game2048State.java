@@ -139,28 +139,28 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public static void moveLeft(){
-		if(isMovePossibleRL()){
+		if(isMovePossibleLeft()){
 			board = boardMove(0);
 			max=true;
 		}			
 	}
 	
 	public static void moveRight(){
-		if(isMovePossibleRL()){
+		if(isMovePossibleRight()){
 			board = boardMove(1);
 			max=true;
 		}			
 	}
 	
 	public static void moveDown(){
-		if(isMovePossibleUD()){
+		if(isMovePossibleDown()){
 			board = boardMove(2);
 			max=true;
 		}			
 	}
 	
 	public static void moveUp(){
-		if(isMovePossibleUD()){
+		if(isMovePossibleUp()){
 			board = boardMove(3);
 			max=true;
 		}			
@@ -189,26 +189,52 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	private static boolean isMovePossible() {
-		return isMovePossibleRL() || isMovePossibleUD();
+		return isMovePossibleLeft() || isMovePossibleRight() || isMovePossibleUp() || isMovePossibleDown();
 	}
-
-	private static boolean isMovePossibleRL() {
-		for(int i=0;i<size;i++){
-			for(int j=0;j<size-1;j++){
-				int aux=j+1;
-				if(board[i][j]==board[i][aux])
-					return true;				
+	
+	public static boolean isMovePossibleLeft() {
+		for(int i = 0; i < size; i++){
+			for(int j = 0; j < size-1; j++){
+				int aux = j+1;
+				if(board[i][j] == board[i][aux] || board[i][j] == 0){
+					return true;
+				}
 			}
 		}
 		return false;
 	}
-
-	private static boolean isMovePossibleUD() {		
-		for(int j=0;j<size;j++){
-			for(int i=0;i<size-1;i++){
-				int aux=i+1;
-				if(board[i][j]==board[aux][j])
-					return true;				
+	
+	public static boolean isMovePossibleRight() {
+		for(int i = 0; i < size; i++){
+			for(int j = size-1; j > 0; j--){
+				int aux = j-1;
+				if(board[i][j] == board[i][aux] || board[i][j] == 0){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isMovePossibleUp() {
+		for(int j = 0; j < size; j++){
+			for(int i = 0; i < size-1; i++){
+				int aux = i+1;
+				if(board[i][j]==board[aux][j] || board[i][j] == 0){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isMovePossibleDown() {
+		for(int j = 0; j < size; j++){
+			for(int i = size-1; i > 0; i--){
+				int aux = i-1;
+				if(board[i][j]==board[aux][j] || board[i][j] == 0){
+					return true;
+				}
 			}
 		}
 		return false;
