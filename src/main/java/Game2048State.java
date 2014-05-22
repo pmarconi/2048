@@ -269,24 +269,18 @@ public class Game2048State implements AdversarySearchState{
 		return false;
 	}
 	
-	/**
-	 * This method agree new value in Random position 
-	 * @pre board != null 	  
-	 * @return board - agree new value in the board, 
-	 */
-	public int[][] addNewValue(){
+	public void addNewValue(){
+		random = new Random();
 		boolean cellSet = false;
-		int [][] boardAux = board;
 		int value = (random.nextInt(10) < 9) ?  2 : 4;
 		while(!cellSet){
-			int x = random.nextInt(boardAux.length);
-			int y = random.nextInt(boardAux.length);
-			if (boardAux[x][y]==0) {
-				boardAux[x][y] = value;
+			int x = random.nextInt(size);
+			int y = random.nextInt(size);
+			if (board[x][y]==0) {
+				put(x,y,value);
 		        cellSet = true;
-			}			
-		} 
-		return boardAux;	
+			}
+		}
 	} 
 
 	public void put(int i, int j, int value) {
