@@ -11,7 +11,7 @@ import java.util.Random;
  * @author matias
  *
  */
-public class Game2048Problem implements AdversarySearchProblem {
+public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 	Game2048State state; 
 	Random random;
 	/**
@@ -22,7 +22,7 @@ public class Game2048Problem implements AdversarySearchProblem {
 	}
 
 	@Override
-	public AdversarySearchState initialState() {
+	public Game2048State initialState() {
 		int [][] boardAux = {
 				{0,0,0,0},
 				{0,0,0,0},
@@ -39,14 +39,14 @@ public class Game2048Problem implements AdversarySearchProblem {
 		return state; 
 	}
 
-	public List getSuccessors(AdversarySearchState state) {
+	public List<Game2048State> getSuccessors(Game2048State state) {
 		List <Game2048State> successors = new LinkedList <Game2048State>();
 		if(state.isMax()){
 			for(int i=0;i<4;i++){
 				for(int j=0;j<4;j++){
 					if(state.get(i, j)==0){
 						Game2048State stateAux = new Game2048State();
-						stateAux = (Game2048State)state;
+						stateAux = state;
 						stateAux.put(i,j,2);
 						successors.add(0,stateAux);
 						stateAux.put(i,j,4);
@@ -55,20 +55,39 @@ public class Game2048Problem implements AdversarySearchProblem {
 				}
 			}
 		}else{
-			
-			
+			Game2048State stateAux = new Game2048State();
+			stateAux = state;
+			if(stateAux.isMovePossibleRight()){
+				stateAux.moveRight();
+				successors.add(0,stateAux);
+			}
+			stateAux = state;
+			if(stateAux.isMovePossibleLeft()){
+				stateAux.moveLeft();
+				successors.add(0,stateAux);
+			}
+			stateAux = state;
+			if(stateAux.isMovePossibleUp()){
+				stateAux.moveUp();
+				successors.add(0,stateAux);
+			}
+			stateAux = state;
+			if(stateAux.isMovePossibleDown()){
+				stateAux.moveDown();
+				successors.add(0,stateAux);
+			}
 		}
 		return successors;
 	}
 
 	@Override
-	public boolean end(AdversarySearchState state) {
-		return getSuccessors(state).isEmpty();
+	public boolean end(Game2048State state) {	
+		return state.isGameOver();    //HACER QUE BUSQUE EL 2048
 	}
 
 	@Override
-	public int value(AdversarySearchState state) {
-		// TODO Auto-generated method stub
+	public int value(Game2048State state) {
+		
 		return 0;
 	}
 
