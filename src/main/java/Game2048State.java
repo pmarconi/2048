@@ -200,7 +200,7 @@ public class Game2048State implements AdversarySearchState{
 	
 	private boolean found2048() {
 		for(int i=0;i<size;i++){
-			for(int j=0;j<size;i++){
+			for(int j=0;j<size;j++){
 				if(board[i][j]==2048) return true;
 			}
 		}
