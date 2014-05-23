@@ -180,6 +180,16 @@ public class MainWindow extends JFrame{
 		});
 		gameJMenu.add(newGameItem);
 		
+		JMenuItem playAIItem = new javax.swing.JMenuItem();
+		playAIItem.setText("Play AI");
+		playAIItem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				keyLock = true;
+				controller.playAI();
+			}
+		});
+		gameJMenu.add(playAIItem);
+		
 		JMenuItem exitItem = new javax.swing.JMenuItem();
 		exitItem.setText("Exit");
 		exitItem.addActionListener(new ActionListener(){
@@ -207,6 +217,10 @@ public class MainWindow extends JFrame{
 		controller.cpuMove();		
 		contentPanel.repaint();
 		keyLock = false;
+	}
+	
+	public void paintContentPanel(){
+		contentPanel.repaint();
 	}
 
 }
