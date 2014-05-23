@@ -84,25 +84,39 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 
 	@Override
 	public boolean end(Game2048State state) {	
-		return state.isGameOver();    //HACER QUE BUSQUE EL 2048
+		return state.isGameOver();    
 	}
 
 	@Override
 	public int value(Game2048State state) {
-		
-		return 0;
+			int maxValue=0;
+			for(int i=0;i<state.getBoard().length;i++){
+				for(int j=0;j<state.getBoard().length;j++){
+					if(state.get(i, j) > maxValue){
+						maxValue = state.get(i, j);     //Search max value in the board
+					}
+				}
+			}
+			int countZero = 0;
+			for(int i=0;i<state.getBoard().length;i++){
+				for(int j=0;j<state.getBoard().length;j++){
+					if(state.get(i, j) == 0){
+						countZero++;
+					}
+				}
+			}
+			
+			return (maxValue + countZero);
 	}
 
 	@Override
 	public int minValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 16;   // Count Zero: 14 + max value initial board: 2 
 	}
 
 	@Override
 	public int maxValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2063;  // Count Zero: 15 + max value initial board 2048 
 	}
 
 }
