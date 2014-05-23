@@ -14,11 +14,15 @@ import java.util.Random;
 public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 	Game2048State state; 
 	Random random;
-	/**
-	 * 
-	 */
+	
+	private Game2048State initial;
+	
 	public Game2048Problem() {
 		random = null;
+	}
+	
+	public Game2048Problem(Game2048State initialState) {
+		initial = initialState;
 	}
 
 	@Override
@@ -45,8 +49,7 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 			for(int i=0;i<4;i++){
 				for(int j=0;j<4;j++){
 					if(state.get(i, j)==0){
-						Game2048State stateAux = new Game2048State();
-						stateAux = state;
+						Game2048State stateAux = new Game2048State(state);
 						stateAux.put(i,j,2);
 						successors.add(0,stateAux);
 						stateAux.put(i,j,4);
@@ -55,23 +58,22 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 				}
 			}
 		}else{
-			Game2048State stateAux = new Game2048State();
-			stateAux = state;
+			Game2048State stateAux = new Game2048State(state);
 			if(stateAux.isMovePossibleRight()){
 				stateAux.moveRight();
 				successors.add(0,stateAux);
 			}
-			stateAux = state;
+			stateAux = new Game2048State(state);
 			if(stateAux.isMovePossibleLeft()){
 				stateAux.moveLeft();
 				successors.add(0,stateAux);
 			}
-			stateAux = state;
+			stateAux = new Game2048State(state);
 			if(stateAux.isMovePossibleUp()){
 				stateAux.moveUp();
 				successors.add(0,stateAux);
 			}
-			stateAux = state;
+			stateAux = new Game2048State(state);
 			if(stateAux.isMovePossibleDown()){
 				stateAux.moveDown();
 				successors.add(0,stateAux);
