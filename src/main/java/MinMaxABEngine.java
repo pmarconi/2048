@@ -7,17 +7,24 @@ public class MinMaxABEngine <S extends AdversarySearchState, P extends Adversary
 	public MinMaxABEngine(P p) {
 		problem = p;
 	}
+	
+	public MinMaxABEngine(P p, int d) {
+		problem = p;
+		maxDepth = d;
+	}
 
 	public int computeValue(S state) {
-		return minMaxAB(state, maxDepth,Integer.MIN_VALUE,Integer.MAX_VALUE);
+		return minMaxAB(state, maxDepth,16,4126);
 	}
 
 	public S computeSuccessor(S state) {
 		List<S> successors = problem.getSuccessors(state);
+		System.out.println("successors: "+successors.size());
 		S result = null;
 		int resValue = Integer.MIN_VALUE;
 		for(S succ : successors){
 			int value = computeValue(succ);
+			System.out.println("value "+succ.ruleApplied()+": "+value);
 			if ( value > resValue){
 				resValue = value;
 				result = succ;

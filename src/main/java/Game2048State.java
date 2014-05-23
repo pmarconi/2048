@@ -12,6 +12,7 @@ public class Game2048State implements AdversarySearchState{
 
 	private Random random;
 	
+	private String ruleApplied;
 	
 	public Game2048State(){
 		board = new int[size][size];
@@ -91,7 +92,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public Object ruleApplied() {
-		return null;// Implement
+		return ruleApplied;
 	}
 
 	/**
@@ -165,6 +166,7 @@ public class Game2048State implements AdversarySearchState{
 	public void moveLeft(){
 		if(isMovePossibleLeft()){
 			board = boardMove(0);
+			ruleApplied = "Left";
 			max=true;
 		}			
 	}
@@ -172,6 +174,7 @@ public class Game2048State implements AdversarySearchState{
 	public void moveRight(){
 		if(isMovePossibleRight()){
 			board = boardMove(1);
+			ruleApplied = "Right";
 			max=true;
 		}			
 	}
@@ -179,6 +182,7 @@ public class Game2048State implements AdversarySearchState{
 	public void moveDown(){
 		if(isMovePossibleDown()){
 			board = boardMove(2);
+			ruleApplied = "Down";
 			max=true;
 		}			
 	}
@@ -186,6 +190,7 @@ public class Game2048State implements AdversarySearchState{
 	public void moveUp(){
 		if(isMovePossibleUp()){
 			board = boardMove(3);
+			ruleApplied = "Up";
 			max=true;
 		}			
 	}
@@ -301,6 +306,7 @@ public class Game2048State implements AdversarySearchState{
 		        cellSet = true;
 			}
 		}
+		ruleApplied = "Add new value";
 	} 
 
 	public void put(int i, int j, int value) {

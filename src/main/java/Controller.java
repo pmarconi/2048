@@ -23,7 +23,7 @@ public class Controller {
 		window.setModel(model);
 		window.setController(this);
 		problem = new Game2048Problem(model);
-		engine = new MinMaxABEngine<Game2048State,Game2048Problem>(problem);
+		engine = new MinMaxABEngine<Game2048State,Game2048Problem>(problem,3);
 	}
 	
 	public void newGame(){
@@ -40,12 +40,16 @@ public class Controller {
 		AIInPlay = true;
 		while (!model.isGameOver() && AIInPlay){
 			model = engine.computeSuccessor(model);
-			System.out.println("computer: \n"+model.toString());
-			//window.paintContentPanel();
+			if (model == null)
+				System.out.println("nulllll");
+			System.out.println("computer:"+model.ruleApplied()+" \n"+model.toString());
+			window.setModel(model);
+			window.paintContentPanel();
 			
 			cpuMove();
-			System.out.println("with new value: \n"+model.toString());
-			//window.paintContentPanel();
+			System.out.println("computer: "+model.ruleApplied()+" \n"+model.toString());
+			window.setModel(model);
+			window.paintContentPanel();
 		}
 		AIInPlay = false;
 	}

@@ -221,6 +221,7 @@ public class MainWindow extends JFrame{
 	
 	public void paintContentPanel(){
 		contentPanel.repaint();
+		//System.out.println("repaint: \n"+model.toString());
 	}
 
 }
