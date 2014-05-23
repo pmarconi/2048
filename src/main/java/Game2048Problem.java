@@ -97,6 +97,15 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 					}
 				}
 			}
+			for(int i=0;i<state.getBoard().length;i++){
+				for(int j=0;j<state.getBoard().length;j++){
+					if((i==0 && state.get(i, j)== maxValue ) || (j==0 && state.get(i, j)== maxValue)|| 
+					(i==state.getBoard().length && state.get(i, j)== maxValue ) || 
+					(j==state.getBoard().length && state.get(i, j)== maxValue) ){
+						maxValue = maxValue * 2; // the max value in the board is allocated in extreme board  	
+					}								//	and mult for 2, else return max value (and not mult 2)
+				}
+			}
 			int countZero = 0;
 			for(int i=0;i<state.getBoard().length;i++){
 				for(int j=0;j<state.getBoard().length;j++){
@@ -116,7 +125,7 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 
 	@Override
 	public int maxValue() {
-		return 2063;  // Count Zero: 15 + max value initial board 2048 
+		return 4126;  // Count Zero: 15 + max value initial board 2048 * 2 (if max value is allocated in the extreme of board)  
 	}
 
 }
