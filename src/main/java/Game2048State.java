@@ -61,6 +61,10 @@ public class Game2048State implements AdversarySearchState{
 		board[i][j] = value;
 	}
 	
+	public void setMax(boolean b){
+		max = b;
+	}
+	
 	public boolean isMax() {
 		return max;
 	}
@@ -221,36 +225,32 @@ public class Game2048State implements AdversarySearchState{
 		return isMovePossibleLeft() || isMovePossibleRight() || isMovePossibleUp() || isMovePossibleDown();
 	}
 	
-	public boolean isMovePossibleLeft() {
-		for(int i = 0; i < size; i++){
-			for(int j = 0; j < size-1; j++){
-				int aux = j+1;
-				if(board[i][j] == board[i][aux] || board[i][j] == 0){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
 	public boolean isMovePossibleRight() {
 		for(int i = 0; i < size; i++){
-			for(int j = size-1; j > 0; j--){
-				int aux = j-1;
-				if(board[i][j] == board[i][aux] || board[i][j] == 0){
-					return true;
+			Integer first = null;
+			for(int j = 0; j < size; j++){
+				if( j < size-1 && board[i][j] != 0){
+					if (first == null) first = j;
+					int aux = j+1;
+					if(board[i][j] == board[i][aux]) return true;
+				}else if(board[i][j] == 0){
+					if (first != null) return true;
 				}
 			}
 		}
 		return false;
 	}
 	
-	public boolean isMovePossibleUp() {
-		for(int j = 0; j < size; j++){
-			for(int i = 0; i < size-1; i++){
-				int aux = i+1;
-				if(board[i][j]==board[aux][j] || board[i][j] == 0){
-					return true;
+	public boolean isMovePossibleLeft() {
+		for(int i = 0; i < size; i++){
+			Integer first = null;
+			for(int j = size-1; j > -1; j--){
+				if(j > 0 && board[i][j] != 0){
+					if (first == null) first = j;
+					int aux = j-1;
+					if(board[i][j] == board[i][aux]) return true;
+				}else if(board[i][j] == 0){
+					if (first != null) return true;
 				}
 			}
 		}
@@ -259,10 +259,30 @@ public class Game2048State implements AdversarySearchState{
 	
 	public boolean isMovePossibleDown() {
 		for(int j = 0; j < size; j++){
-			for(int i = size-1; i > 0; i--){
-				int aux = i-1;
-				if(board[i][j]==board[aux][j] || board[i][j] == 0){
-					return true;
+			Integer first = null;
+			for(int i = 0; i < size; i++){
+				if( i < size-1 && board[i][j] != 0){
+					if (first == null) first = i;
+					int aux = i+1;
+					if(board[i][j] == board[aux][j]) return true;
+				}else if(board[i][j] == 0){
+					if (first != null) return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean isMovePossibleUp() {
+		for(int j = 0; j < size; j++){
+			Integer first = null;
+			for(int i = size-1; i > -1; i--){
+				if( i > 0 && board[i][j] != 0){
+					if (first == null) first = i;
+					int aux = i-1;
+					if(board[i][j] == board[aux][j]) return true;
+				}else if(board[i][j] == 0){
+					if (first != null) return true;
 				}
 			}
 		}
