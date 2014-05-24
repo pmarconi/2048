@@ -5,6 +5,19 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class BoardTests {
+	
+	int size = 4;
+	
+	public String toString(int [][] board){
+		String s = "";
+		for(int i = 0; i < size; i++){
+			for(int j = 0; j < size; j++){
+				s += board[i][j] + " ";
+			}
+			s += "\n";
+		}
+		return s;
+	}
 
 	@Test
 	public void testMoveLeft() {
@@ -13,14 +26,14 @@ public class BoardTests {
 				{4,4,4,4},
 				{2,0,4,0},
 				{0,2,0,4},
-				{0,0,2,2},
+				{0,2,2,4},
 		};
 		b.setBoard(b1);
 		int[][] expBoard = {
 				{8,8,0,0},
 				{2,4,0,0},
 				{2,4,0,0},
-				{4,0,0,0},
+				{4,4,0,0},
 		};
 		assertArrayEquals(b.boardMove(0),expBoard);
 	}
@@ -29,14 +42,14 @@ public class BoardTests {
 	public void testMoveRight() {
 		Game2048State b = new Game2048State();
 		int[][] b1 = {
-				{0,4,0,4},
+				{8,4,0,4},
 				{2,0,4,0},
 				{0,2,0,4},
 				{0,0,2,2},
 		};
 		b.setBoard(b1);
 		int[][] expBoard = {
-				{0,0,0,8},
+				{0,0,8,8},
 				{0,0,2,4},
 				{0,0,2,4},
 				{0,0,0,4},
@@ -51,12 +64,12 @@ public class BoardTests {
 				{0,4,0,4},
 				{2,0,4,0},
 				{0,4,0,4},
-				{0,0,2,2},
+				{0,8,2,2},
 		};
 		b.setBoard(b1);
 		int[][] expBoard = {
 				{2,8,4,8},
-				{0,0,2,2},
+				{0,8,2,2},
 				{0,0,0,0},
 				{0,0,0,0},
 		};
@@ -67,16 +80,16 @@ public class BoardTests {
 	public void testMoveDown() {
 		Game2048State b = new Game2048State();
 		int[][] b1 = {
-				{0,4,0,4},
-				{2,0,4,0},
+				{0,4,4,8},
+				{2,0,4,4},
 				{0,4,0,4},
 				{0,0,2,2},
 		};
 		b.setBoard(b1);
 		int[][] expBoard = {
 				{0,0,0,0},
-				{0,0,0,0},
-				{0,0,4,8},
+				{0,0,0,8},
+				{0,0,8,8},
 				{2,8,2,2},
 		};
 		assertArrayEquals(b.boardMove(2),expBoard);

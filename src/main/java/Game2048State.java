@@ -102,6 +102,7 @@ public class Game2048State implements AdversarySearchState{
 		if(direction < 0 || direction > 3) throw new IllegalStateException("The direction value is not valid!");
 		int[] vector = vectorOfMovements(direction);		
 		int[][] resBoard = new int[size][size];
+		boolean plus = false;
 		if (direction == 0 || direction == 1){// Left and Right
 			for(int i = 0; i != size; i++){
 				Integer last = null;// The last element ordered in the row.
@@ -111,11 +112,13 @@ public class Game2048State implements AdversarySearchState{
 							resBoard[i][vector[1]] = board[i][j];
 							last = vector[1];
 						}else{// Exist at least one element in resBoard[i].
-							if(resBoard[i][last] == board[i][j]){
-								resBoard[i][last] += board[i][j];
+							if(resBoard[i][last] == board[i][j] && !plus){
+									resBoard[i][last] += board[i][j];
+									plus = true;
 							}else{
 								resBoard[i][last+vector[5]] = board[i][j];
 								last += vector[5];
+								plus = false;
 							}
 						}
 					}
@@ -130,11 +133,13 @@ public class Game2048State implements AdversarySearchState{
 							resBoard[vector[1]][j] = board[i][j];
 							last = vector[1];
 						}else{// Exist at least one element in the row.
-							if(resBoard[last][j] == board[i][j]){
+							if(resBoard[last][j] == board[i][j] && !plus){
 								resBoard[last][j] += board[i][j];
+								plus = true;
 							}else{
 								resBoard[last+vector[5]][j] = board[i][j];
 								last += vector[5];
+								plus = false;
 							}
 						}
 					}
