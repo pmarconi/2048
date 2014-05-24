@@ -32,10 +32,8 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public void init(){
-		//Change.
-		board[1][1] = 2;
-		board[2][2] = 2;
-		board[3][3] = 4;
+		this.addNewValue();
+		this.addNewValue();
 	}
 	
 	/**
