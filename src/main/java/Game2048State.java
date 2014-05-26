@@ -32,6 +32,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public void init(){
+		if(board == null) throw new IllegalStateException("board null");
 		this.addNewValue();
 		this.addNewValue();
 	}
@@ -41,6 +42,7 @@ public class Game2048State implements AdversarySearchState{
 	 * @param b, new board.
 	 */
 	public void setBoard(int[][] b){
+		if(b == null) throw new IllegalArgumentException("Board null");
 		board = b;
 	}
 	
@@ -49,15 +51,18 @@ public class Game2048State implements AdversarySearchState{
 	 * @return the array board.
 	 */
 	public int[][] getBoard(){
+		if(board == null) throw new IllegalStateException("board null");
 		return board;
 	}
 	
 	public int get(int i, int j){
+		if(board == null) throw new IllegalStateException("board null");
 		return board[i][j];
 	}
 	
-	public void set(int i, int j, int value){
-		board[i][j] = value;
+	public void put(int i, int j, int value) {
+		if(board == null) throw new IllegalStateException("board null");
+		board[i][j] = value;		
 	}
 	
 	public void setMax(boolean b){
@@ -69,6 +74,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public String toString(){
+		if(board == null) throw new IllegalStateException("board null");
 		String s = "";
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
@@ -80,6 +86,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public boolean equals(AdversarySearchState s) {
+		if(s == null) throw new IllegalArgumentException("State null");
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
 				if(board[i][j] != s.get(i,j))
@@ -90,6 +97,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public Object ruleApplied() {
+		if(ruleApplied == null) throw new IllegalStateException("rule Applied null");
 		return ruleApplied;
 	}
 
@@ -156,6 +164,7 @@ public class Game2048State implements AdversarySearchState{
 	 * @return the vector that defines the begin, end and increments of variables 'i' and 'j'.
 	 */
 	public int[] vectorOfMovements(int direction){
+		if(direction < 0 || direction > 3) throw new IllegalStateException("The direction value is not valid!");
 		int[] vector;
 		//Vector [0:begin of 'i', 1:begin of 'j',2:end of 'i', 3:end of 'j',4:increment of 'i', 5:increment of 'j']
 		if(direction == 0 || direction == 3){ // Left and up.
@@ -167,6 +176,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public void moveLeft(){
+		if(board == null) throw new IllegalStateException("board null");
 		if(isMovePossibleLeft()){
 			board = boardMove(0);
 			ruleApplied = "Left";
@@ -175,6 +185,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public void moveRight(){
+		if(board == null) throw new IllegalStateException("board null");
 		if(isMovePossibleRight()){
 			board = boardMove(1);
 			ruleApplied = "Right";
@@ -183,6 +194,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public void moveDown(){
+		if(board == null) throw new IllegalStateException("board null");
 		if(isMovePossibleDown()){
 			board = boardMove(2);
 			ruleApplied = "Down";
@@ -191,6 +203,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public void moveUp(){
+		if(board == null) throw new IllegalStateException("board null");
 		if(isMovePossibleUp()){
 			board = boardMove(3);
 			ruleApplied = "Up";
@@ -203,10 +216,12 @@ public class Game2048State implements AdversarySearchState{
 	 * @return true if the game over.
 	 */
 	public boolean isGameOver() {
+		if(board == null) throw new IllegalStateException("board null");
 		return isBoardFull() && !isMovePossible() && !found2048();
 	}
 	
 	private boolean found2048() {
+		if(board == null) throw new IllegalStateException("board null");
 		for(int i=0;i<size;i++){
 			for(int j=0;j<size;j++){
 				if(board[i][j]==2048) return true;
@@ -220,6 +235,7 @@ public class Game2048State implements AdversarySearchState{
 	 * @return true if board is full.
 	 */
 	private boolean isBoardFull(){
+		if(board == null) throw new IllegalStateException("board null");
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
 				if(board[i][j] == 0)
@@ -230,10 +246,12 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	private boolean isMovePossible() {
+		if(board == null) throw new IllegalStateException("board null");
 		return isMovePossibleLeft() || isMovePossibleRight() || isMovePossibleUp() || isMovePossibleDown();
 	}
 	
 	public boolean isMovePossibleRight() {
+		if(board == null) throw new IllegalStateException("board null");
 		for(int i = 0; i < size; i++){
 			Integer first = null;
 			for(int j = 0; j < size; j++){
@@ -250,6 +268,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public boolean isMovePossibleLeft() {
+		if(board == null) throw new IllegalStateException("board null");
 		for(int i = 0; i < size; i++){
 			Integer first = null;
 			for(int j = size-1; j > -1; j--){
@@ -266,6 +285,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public boolean isMovePossibleDown() {
+		if(board == null) throw new IllegalStateException("board null");
 		for(int j = 0; j < size; j++){
 			Integer first = null;
 			for(int i = 0; i < size; i++){
@@ -282,6 +302,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public boolean isMovePossibleUp() {
+		if(board == null) throw new IllegalStateException("board null");
 		for(int j = 0; j < size; j++){
 			Integer first = null;
 			for(int i = size-1; i > -1; i--){
@@ -298,6 +319,7 @@ public class Game2048State implements AdversarySearchState{
 	}
 	
 	public void addNewValue(){
+		if(board == null) throw new IllegalStateException("board null");
 		random = new Random();
 		boolean cellSet = false;
 		int value = (random.nextInt(10) < 9) ?  2 : 4;
@@ -311,10 +333,6 @@ public class Game2048State implements AdversarySearchState{
 		}
 		ruleApplied = "Add new value";
 	} 
-
-	public void put(int i, int j, int value) {
-		board[i][j] = value;		
-	}
 	
 }
 	

@@ -14,10 +14,12 @@ public class MinMaxABEngine <S extends AdversarySearchState, P extends Adversary
 	}
 
 	public int computeValue(S state) {
-		return minMaxAB(state, maxDepth,16,4126);
+		if(state == null) throw new IllegalArgumentException("State null");
+		return minMaxAB(state, maxDepth,problem.minValue(),problem.maxValue());
 	}
 
 	public S computeSuccessor(S state) {
+		if(state == null) throw new IllegalArgumentException("State null");
 		List<S> successors = problem.getSuccessors(state);
 		System.out.println("successors: "+successors.size());
 		S result = null;
@@ -40,6 +42,10 @@ public class MinMaxABEngine <S extends AdversarySearchState, P extends Adversary
 	}
 
 	public int minMaxAB(S state, int depth, int alpha, int beta){
+		if(state == null) throw new IllegalArgumentException("State null");
+		if(depth<0) throw new IllegalArgumentException("invalid depth");
+		if(alpha<0) throw new IllegalArgumentException("invalid alpha");
+		if(beta<0) throw new IllegalArgumentException("invalid beta");
 		if(problem.end(state) || depth == 0){
 			return problem.value(state);
 		}else{

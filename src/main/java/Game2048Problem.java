@@ -27,23 +27,11 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 
 	@Override
 	public Game2048State initialState() {
-		int [][] boardAux = {
-				{0,0,0,0},
-				{0,0,0,0},
-				{0,0,0,0},
-				{0,0,0,0},
-							};
-		for(int i=0;i<2;i++){
-			int x = random.nextInt(4); 		// for test use 0
-			int y = random.nextInt(4);   //for test use 0
-			int value = (random.nextInt(10) < 9) ?  2 : 4; //for test use 1
-			boardAux[x][y] = value;
-			state.setBoard(boardAux);
-		}
-		return state; 
+		return initial; 
 	}
-
+	
 	public List<Game2048State> getSuccessors(Game2048State state) {
+		if(state == null) throw new IllegalArgumentException("State null");
 		List <Game2048State> successors = new LinkedList <Game2048State>();
 		if(state.isMax()){
 			for(int i=0;i<4;i++){
@@ -82,48 +70,45 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 		return successors;
 	}
 
-	@Override
-	public boolean end(Game2048State state) {	
+	public boolean end(Game2048State state) {
+		if(state == null) throw new IllegalArgumentException("State null");
 		return state.isGameOver();    
 	}
 
-	@Override
 	public int value(Game2048State state) {
-			int maxValue=0;
-			for(int i=0;i<state.getBoard().length;i++){
-				for(int j=0;j<state.getBoard().length;j++){
-					if(state.get(i, j) > maxValue){
-						maxValue = state.get(i, j);     //Search max value in the board
-					}
+		if(state == null) throw new IllegalArgumentException("State null");
+		int maxValue=0;
+		for(int i=0;i<state.getBoard().length;i++){
+			for(int j=0;j<state.getBoard().length;j++){
+				if(state.get(i, j) > maxValue){
+					maxValue = state.get(i, j);     //Search max value in the board
 				}
 			}
-			for(int i=0;i<state.getBoard().length;i++){
-				for(int j=0;j<state.getBoard().length;j++){
-					if((i==0 && state.get(i, j)== maxValue ) || (j==0 && state.get(i, j)== maxValue)|| 
+		}
+		for(int i=0;i<state.getBoard().length;i++){
+			for(int j=0;j<state.getBoard().length;j++){
+				if((i==0 && state.get(i, j)== maxValue ) || (j==0 && state.get(i, j)== maxValue)|| 
 					(i==state.getBoard().length && state.get(i, j)== maxValue ) || 
 					(j==state.getBoard().length && state.get(i, j)== maxValue) ){
 						maxValue = maxValue * 2; // the max value in the board is allocated in extreme board  	
-					}								//	and mult for 2, else return max value (and not mult 2)
+				}								//	and mult for 2, else return max value (and not mult 2)
+			}
+		}
+		int countZero = 0;
+		for(int i=0;i<state.getBoard().length;i++){
+			for(int j=0;j<state.getBoard().length;j++){
+				if(state.get(i, j) == 0){
+					countZero++;
 				}
 			}
-			int countZero = 0;
-			for(int i=0;i<state.getBoard().length;i++){
-				for(int j=0;j<state.getBoard().length;j++){
-					if(state.get(i, j) == 0){
-						countZero++;
-					}
-				}
-			}
-			
-			return (maxValue + countZero);
+		}			
+		return (maxValue + countZero);
 	}
 
-	@Override
 	public int minValue() {
 		return 16;   // Count Zero: 14 + max value initial board: 2 
 	}
 
-	@Override
 	public int maxValue() {
 		return 4126;  // Count Zero: 15 + max value initial board 2048 * 2 (if max value is allocated in the extreme of board)  
 	}
