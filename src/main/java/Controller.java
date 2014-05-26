@@ -1,7 +1,5 @@
 package main.java;
 
-import java.util.concurrent.TimeUnit;
-
 public class Controller {
 	
 	private Game2048State model;
@@ -23,7 +21,7 @@ public class Controller {
 		window.setModel(model);
 		window.setController(this);
 		problem = new Game2048Problem(model);
-		engine = new MinMaxABEngine<Game2048State,Game2048Problem>(problem,3);
+		engine = new MinMaxABEngine<Game2048State,Game2048Problem>(problem,4);
 	}
 	
 	public void newGame(){
@@ -40,8 +38,6 @@ public class Controller {
 		AIInPlay = true;
 		while (!model.isGameOver() && AIInPlay){
 			model = engine.computeSuccessor(model);
-			if (model == null)
-				System.out.println("nulllll");
 			System.out.println("computer:"+model.ruleApplied()+" \n"+model.toString());
 			window.setModel(model);
 			window.paintContentPanel();
@@ -52,6 +48,7 @@ public class Controller {
 			window.paintContentPanel();
 		}
 		AIInPlay = false;
+		engine.report();
 	}
 	
 }
