@@ -90,22 +90,24 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 	public int value(Game2048State state) {
 		if(state == null) throw new IllegalArgumentException("State null");
 		int maxValue=0;
+		int maxValueFirstQuadrant=0;
+		int maxValueSecondQuadrant=0;
+		int maxValueThirdQuadrant=0;
+		int maxValueFourthQuadrant=0;
+		int indexI=0;
+		int indexJ=0;
+		int best = 0;
+		
 		for(int i=0;i<state.getBoard().length;i++){
 			for(int j=0;j<state.getBoard().length;j++){
 				if(state.get(i, j) > maxValue){
-					maxValue = state.get(i, j);     //Search max value in the board
+					maxValue = state.get(i, j);  //Search max value in the board
+					indexI=i;  //save index to max value
+					indexJ=j;
 				}
 			}
 		}
-		for(int i=0;i<state.getBoard().length;i++){
-			for(int j=0;j<state.getBoard().length;j++){
-				if((i==0 && state.get(i, j)== maxValue ) || (j==0 && state.get(i, j)== maxValue)|| 
-					(i==state.getBoard().length && state.get(i, j)== maxValue ) || 
-					(j==state.getBoard().length && state.get(i, j)== maxValue) ){
-						maxValue = maxValue * 2; // the max value in the board is allocated in extreme board  	
-				}								//	and mult for 2, else return max value (and not mult 2)
-			}
-		}
+		
 		int countZero = 0;
 		for(int i=0;i<state.getBoard().length;i++){
 			for(int j=0;j<state.getBoard().length;j++){
@@ -113,12 +115,28 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 					countZero++;
 				}
 			}
-		}			
-		return (maxValue * countZero);
+		}
+		
+		if((indexI==0 && (indexJ>=2 && indexJ<=3)) || (indexJ==3 && (indexI<=0 && indexI>=1))){
+			maxValueFirstQuadrant++; 
+		}
+		if((indexI==0 && (indexJ>=0 && indexJ<=1)) || (indexJ==0 && (indexI<=0 && indexI>=1))){
+			maxValueSecondQuadrant++;
+		}
+		if((indexI==3 && (indexJ>=0 && indexJ<=1)) || (indexJ==0 && (indexI<=2 && indexI>=3))){
+			maxValueThirdQuadrant++;
+		}
+		if((indexI==3 && (indexJ>=2 && indexJ<=3)) || (indexJ==3 && (indexI<=2 && indexI>=3))){
+			maxValueFourthQuadrant++;
+		}
+		
+		int bestQuadrant = Math.max(maxValueFirstQuadrant, Math.max(maxValueSecondQuadrant, Math.max(maxValueThirdQuadrant,maxValueFourthQuadrant)));
+		best = (bestQuadrant*500) + (maxValue*1000) + (countZero*10000);		
+		return best;
 	}
 
 	public int minValue() {
-		return Integer.MIN_VALUE; 
+		return Integer.MIN_VALUE;  
 	}
 
 	public int maxValue() {
