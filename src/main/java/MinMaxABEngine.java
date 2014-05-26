@@ -55,8 +55,8 @@ public class MinMaxABEngine <S extends AdversarySearchState, P extends Adversary
 	public int minMaxAB(S state, int depth, int alpha, int beta){
 		if(state == null) throw new IllegalArgumentException("State null");
 		if(depth<0) throw new IllegalArgumentException("invalid depth");
-		if(alpha<0) throw new IllegalArgumentException("invalid alpha");
-		if(beta<0) throw new IllegalArgumentException("invalid beta");
+		//if(alpha<0) throw new IllegalArgumentException("invalid alpha");
+		//if(beta<0) throw new IllegalArgumentException("invalid beta");
 		visitedStates++;
 		//System.out.println("alpha: "+alpha+", beta: "+beta);
 		if(problem.end(state) || depth == 0){

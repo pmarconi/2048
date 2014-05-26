@@ -114,15 +114,15 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 				}
 			}
 		}			
-		return (maxValue + countZero);
+		return (maxValue * countZero);
 	}
 
 	public int minValue() {
-		return 16;   // Count Zero: 14 + max value initial board: 2 
+		return Integer.MIN_VALUE; 
 	}
 
 	public int maxValue() {
-		return 4126;  // Count Zero: 15 + max value initial board 2048 * 2 (if max value is allocated in the extreme of board)  
+		return Integer.MAX_VALUE;  
 	}
 
 }
