@@ -21,19 +21,28 @@ public class Controller {
 		window.setModel(model);
 		window.setController(this);
 		problem = new Game2048Problem(model);
-		engine = new MinMaxABEngine<Game2048State,Game2048Problem>(problem,4);
+		engine = new MinMaxABEngine<Game2048State,Game2048Problem>(problem,6);
 	}
 	
 	public void newGame(){
 		model = new Game2048State();
 		startGame();
 	}
-	
+	/**
+	 * cpuMove() - Agree new value in board and 
+	 * set the player (max) with false
+	 * 
+	 */
 	public void cpuMove(){
 		model.addNewValue();
 		model.setMax(false);
 	}
-
+	
+	/**
+	 * playAI() - Artificial Inteligent play 
+	 * and paint the board (respect to board)
+	 * 
+	 */
 	public void playAI() {
 		AIInPlay = true;
 		while (!model.isGameOver() && AIInPlay){
