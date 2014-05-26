@@ -114,6 +114,7 @@ public class Game2048State implements AdversarySearchState{
 		if (direction == 0 || direction == 1){// Left and Right
 			for(int i = 0; i != size; i++){
 				Integer last = null;// The last element ordered in the row.
+				plus = false;
 				for(int j = vector[1]; j != vector[3]; j+=vector[5]){
 					if(board[i][j] != 0){
 						if(last == null){//If not exist an element in the row.
@@ -135,6 +136,7 @@ public class Game2048State implements AdversarySearchState{
 		}else{// if (direction == 2 || direction == 3), Up and down.
 			for(int j = 0; j != size; j++){
 				Integer last = null;// The last element ordered in the row.
+				plus = false;
 				for(int i = vector[1]; i != vector[3]; i+=vector[5]){
 					if(board[i][j] != 0){
 						if(last == null){// If not exist an element in the row.
