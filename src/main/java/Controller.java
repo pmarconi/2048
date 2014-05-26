@@ -29,11 +29,21 @@ public class Controller {
 		startGame();
 	}
 	
+	/**
+	 * cpuMove() - Agree new value in board and 
+	 * set the player (max) with false
+	 * 
+	 */
 	public void cpuMove(){
 		model.addNewValue();
 		model.setMax(false);
 	}
-
+	
+	/**
+	 * playAI() - Artificial Inteligent play 
+	 * and paint the board (respect to board)
+	 * 
+	 */
 	public void playAI() {
 		AIInPlay = true;
 		while (!model.isGameOver() && AIInPlay){

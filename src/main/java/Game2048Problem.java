@@ -30,6 +30,13 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 		return initial; 
 	}
 	
+	/**
+	 * Method getSuccesors get all succesors for level (tree play)
+	 * and calculate best son on the tree
+	 * @param state
+	 * @return  List<Game2048State> , list of succesors  
+	 * 
+	 */
 	public List<Game2048State> getSuccessors(Game2048State state) {
 		if(state == null) throw new IllegalArgumentException("State null");
 		List <Game2048State> successors = new LinkedList <Game2048State>();
