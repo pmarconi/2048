@@ -38,6 +38,7 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 				for(int j=0;j<4;j++){
 					if(state.get(i, j)==0){
 						Game2048State stateAux = new Game2048State(state);
+						stateAux.setMax(false);
 						stateAux.put(i,j,2);
 						successors.add(0,stateAux);
 						stateAux.put(i,j,4);
@@ -49,21 +50,25 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 			Game2048State stateAux = new Game2048State(state);
 			if(stateAux.isMovePossibleRight()){
 				stateAux.moveRight();
+				stateAux.setMax(true);
 				successors.add(0,stateAux);
 			}
 			stateAux = new Game2048State(state);
 			if(stateAux.isMovePossibleLeft()){
 				stateAux.moveLeft();
+				stateAux.setMax(true);
 				successors.add(0,stateAux);
 			}
 			stateAux = new Game2048State(state);
 			if(stateAux.isMovePossibleUp()){
 				stateAux.moveUp();
+				stateAux.setMax(true);
 				successors.add(0,stateAux);
 			}
 			stateAux = new Game2048State(state);
 			if(stateAux.isMovePossibleDown()){
 				stateAux.moveDown();
+				stateAux.setMax(true);
 				successors.add(0,stateAux);
 			}
 		}

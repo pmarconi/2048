@@ -21,7 +21,7 @@ public class Controller {
 		window.setModel(model);
 		window.setController(this);
 		problem = new Game2048Problem(model);
-		engine = new MinMaxABEngine<Game2048State,Game2048Problem>(problem,4);
+		engine = new MinMaxABEngine<Game2048State,Game2048Problem>(problem,7);
 	}
 	
 	public void newGame(){

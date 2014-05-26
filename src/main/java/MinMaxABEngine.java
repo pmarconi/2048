@@ -58,18 +58,23 @@ public class MinMaxABEngine <S extends AdversarySearchState, P extends Adversary
 		if(alpha<0) throw new IllegalArgumentException("invalid alpha");
 		if(beta<0) throw new IllegalArgumentException("invalid beta");
 		visitedStates++;
+		//System.out.println("alpha: "+alpha+", beta: "+beta);
 		if(problem.end(state) || depth == 0){
 			finalStates++;
 			return problem.value(state);
 		}else{
 			List<S> suc = problem.getSuccessors(state);
 			for (S child : suc) {
+				//System.out.println("is max?" + child.isMax());
 				if (state.isMax()){
+					//System.out.println("isMax");
 					alpha = max(alpha, minMaxAB(child, depth-1, alpha, beta));
 				}else{
+					//System.out.println("isMin");
 					beta = min(beta, minMaxAB(child, depth-1, alpha, beta));
 				}
 				if(alpha >= beta){
+					//System.out.println("poda");
 					countPruning++;
 					break;
 				}
