@@ -131,7 +131,7 @@ public class Game2048Problem implements AdversarySearchProblem<Game2048State> {
 		}
 		
 		int bestQuadrant = Math.max(maxValueFirstQuadrant, Math.max(maxValueSecondQuadrant, Math.max(maxValueThirdQuadrant,maxValueFourthQuadrant)));
-		best = (bestQuadrant*500) + (maxValue*1000) + (countZero*10000);		
+		best = ((maxValue*4096) * (countZero*16)) + (bestQuadrant*countZero);		
 		return best;
 	}
 
